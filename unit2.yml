@@ -1,0 +1,12 @@
+---
+- name: unit with service and component roles
+  hosts: localhost
+  gather_facts: smart
+  roles:
+    - service1
+    - service2
+    - component1
+    - component2
+    - component3
+
+

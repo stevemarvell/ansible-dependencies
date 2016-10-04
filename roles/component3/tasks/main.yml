@@ -1,0 +1,3 @@
+---
+- name: component three
+  debug: msg="component three task"

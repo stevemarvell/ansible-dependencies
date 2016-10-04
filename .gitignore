@@ -1,0 +1,17 @@
+# Emacs
+*.elc
+*~
+
+# Packaging
+.cask
+
+# ansible keys
+ansible_rsa
+ansible_rsa.pub
+
+# retries
+playbooks/*.retry
+
+# ansible directories
+facts
+

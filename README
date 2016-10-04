@@ -1,0 +1,154 @@
+Architecture:
+
+service1 depends on common
+service2 depends on common
+
+component1 depends on common and service1
+component2 depends on common and service2
+component2 depends on common, service1 andservice2
+
+Here are the highlights:
+
+[site.xml]
+---
+- include: unit1.yml
+- include: unit2.yml
+- include: unit3.yml
+
+[unit1.yml]
+---
+- name: unit with common, service and component roles
+  hosts: localhost
+  gather_facts: smart
+  roles:
+    - common
+    - service1
+    - service2
+    - component1
+    - component2
+    - component3
+
+[unit2.xml]
+---
+- name: unit with service and component roles
+  hosts: localhost
+  gather_facts: smart
+  roles:
+    - service1
+    - service2
+    - component1
+    - component2
+    - component3
+
+[unit3.xml]
+---
+- name: unit with component roles only
+  hosts: localhost
+  gather_facts: smart
+  roles:
+    - component1
+    - component2
+    - component3
+
+$ ansible-playbook site.yml 
+ [WARNING]: provided hosts list is empty, only localhost is available
+
+
+PLAY [unit with common, service and component roles] ***************************
+
+TASK [common : common] *********************************************************
+ok: [localhost] => {
+    "msg": "common task"
+}
+
+TASK [service1 : service one] **************************************************
+ok: [localhost] => {
+    "msg": "service one task"
+}
+
+TASK [service2 : service two] **************************************************
+ok: [localhost] => {
+    "msg": "service two task"
+}
+
+TASK [component1 : component one] **********************************************
+ok: [localhost] => {
+    "msg": "component one task"
+}
+
+TASK [component2 : component two] **********************************************
+ok: [localhost] => {
+    "msg": "component two task"
+}
+
+TASK [component3 : component three] ********************************************
+ok: [localhost] => {
+    "msg": "component three task"
+}
+
+PLAY [unit with service and component roles] ***********************************
+
+TASK [common : common] *********************************************************
+ok: [localhost] => {
+    "msg": "common task"
+}
+
+TASK [service1 : service one] **************************************************
+ok: [localhost] => {
+    "msg": "service one task"
+}
+
+TASK [service2 : service two] **************************************************
+ok: [localhost] => {
+    "msg": "service two task"
+}
+
+TASK [component1 : component one] **********************************************
+ok: [localhost] => {
+    "msg": "component one task"
+}
+
+TASK [component2 : component two] **********************************************
+ok: [localhost] => {
+    "msg": "component two task"
+}
+
+TASK [component3 : component three] ********************************************
+ok: [localhost] => {
+    "msg": "component three task"
+}
+
+PLAY [unit with component roles only] ******************************************
+
+TASK [common : common] *********************************************************
+ok: [localhost] => {
+    "msg": "common task"
+}
+
+TASK [service1 : service one] **************************************************
+ok: [localhost] => {
+    "msg": "service one task"
+}
+
+TASK [component1 : component one] **********************************************
+ok: [localhost] => {
+    "msg": "component one task"
+}
+
+TASK [service2 : service two] **************************************************
+ok: [localhost] => {
+    "msg": "service two task"
+}
+
+TASK [component2 : component two] **********************************************
+ok: [localhost] => {
+    "msg": "component two task"
+}
+
+TASK [component3 : component three] ********************************************
+ok: [localhost] => {
+    "msg": "component three task"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=18   changed=0    unreachable=0    failed=0   
